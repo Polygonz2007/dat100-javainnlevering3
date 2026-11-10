@@ -5,46 +5,72 @@ import no.hvl.dat100.oppgave1.*;
 
 public class Blogg {
 
-	// TODO: objektvariable 
+	// Variabler
+	private Innlegg[] innleggstabell;
+	private int nesteledig;
 
 	public Blogg() {
-		throw new UnsupportedOperationException(TODO.constructor("Blogg"));
+		this.innleggstabell = new Innlegg[20];
+		this.nesteledig = 0;
 	}
 
 	public Blogg(int lengde) {
-		throw new UnsupportedOperationException(TODO.constructor("Blogg"));
+		this.innleggstabell = new Innlegg[lengde];
+		this.nesteledig = 0;
 	}
 
 	public int getAntall() {
-		throw new UnsupportedOperationException(TODO.method());
+		return this.nesteledig;
 	}
 	
 	public Innlegg[] getSamling() {
-		throw new UnsupportedOperationException(TODO.method());
-
+		return this.innleggstabell;
 	}
 	
 	public int finnInnlegg(Innlegg innlegg) {
+		for (int i = 0; i < this.innleggstabell.length; i++) {
+			if (this.innleggstabell[i] == null) { continue; }
+				if (this.innleggstabell[i].erLik(innlegg))
+					return i;
+		}
 
-		throw new UnsupportedOperationException(TODO.method());
+		return -1;
 	}
 
 	public boolean finnes(Innlegg innlegg) {
-		throw new UnsupportedOperationException(TODO.method());
+		return finnInnlegg(innlegg) != -1;
 	}
 
 	public boolean ledigPlass() {
-		throw new UnsupportedOperationException(TODO.method());
+		for (int i = 0; i < this.innleggstabell.length; i++) {
+			if (this.innleggstabell[i] == null)
+				return true;
+		}
 
+		return false;
 	}
 	
 	public boolean leggTil(Innlegg innlegg) {
+		// Skjekk om det allerede erher
+		if (this.finnes(innlegg)) return false;
 
-		throw new UnsupportedOperationException(TODO.method());
+		// FInn ledig plass
+		this.nesteledig++;
+		int plass = this.nesteledig;
+		this.innleggstabell[plass] = innlegg;
+		return true;
 	}
 	
 	public String toString() {
-		throw new UnsupportedOperationException(TODO.method());
+		StringBuilder str = new StringBuilder();
+		str.append(this.nesteledig + "\n");
+
+		for (int i = 0; i < this.innleggstabell.length; i++) {
+			if (this.innleggstabell[i] == null) { continue; }
+			str.append(this.innleggstabell[i].toString());
+		}
+
+		return str.toString();
 	}
 
 	// valgfrie oppgaver nedenfor
